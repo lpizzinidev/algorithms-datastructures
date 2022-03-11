@@ -1,0 +1,14 @@
+{
+  "name": "javascript-dsa",
+  "version": "1.0.0",
+  "description": "A collection of data structures and algorithms implemented using JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Luca Pizzini",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
