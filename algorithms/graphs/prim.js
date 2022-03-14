@@ -15,8 +15,7 @@ const prim = (edges, n) => {
   // Create a priority queue to store the edges ordered by their weight
   const priorityQueue = new PriorityQueue();
   // Add the 0th edge to the visited ones and populate the priority queue with its adjacent values
-  for (let i = 0; i < edges.length; i++) {
-    const [origin, destination, weight] = edges[i];
+  for (const [origin, destination, weight] of edges) {
     if (origin === 0) {
       priorityQueue.enqueue({ origin, destination, weight }, weight);
     }
@@ -30,8 +29,7 @@ const prim = (edges, n) => {
     if (!included.has(destination)) {
       result += weight;
       included.add(destination);
-      for (let j = 0; j < edges.length; j++) {
-        const [origin2, destination2, weight2] = edges[j];
+      for (const [origin2, destination2, weight2] of edges) {
         if (origin2 === destination && !included.has(destination2)) {
           priorityQueue.enqueue(
             {
