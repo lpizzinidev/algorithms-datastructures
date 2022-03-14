@@ -25,19 +25,19 @@ class PriorityQueue {
 
   // Returns the first element of the queue and removes it
   dequeue() {
-    if (this.isEmpty()) return;
+    if (this.isEmpty()) throw new Error('No elements in queue');
     return this.items.shift();
   }
 
   // Returns the first element of the queue, without removing it
   front() {
-    if (this.isEmpty()) return;
+    if (this.isEmpty()) throw new Error('No elements in queue');
     return this.items[0];
   }
 
   // Returns the last element of the queue
   rear() {
-    if (this.isEmpty()) return;
+    if (this.isEmpty()) throw new Error('No elements in queue');
     return this.items[this.items.length - 1];
   }
 

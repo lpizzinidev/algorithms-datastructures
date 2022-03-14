@@ -4,6 +4,10 @@ describe('PriorityQueue', () => {
   test('constructor', () => {
     const priorityQueue = new PriorityQueue();
 
+    expect(() => {
+      priorityQueue.front();
+    }).toThrow(new Error('No elements in queue'));
+
     priorityQueue.enqueue('John', 2);
     priorityQueue.enqueue('Paul', 1);
     priorityQueue.enqueue('Sandra', 3);
