@@ -1,7 +1,7 @@
 const { PriorityQueue } = require('../../data_structures/priority_queue');
 
 /**
- * Kruskal's algorithm implementation using a Priority Queue data structure.
+ * Dijkstra's algorithm implementation using a Priority Queue data structure.
  * The method returns the list of shortest path reachable from a starting node in a weighted graph.
  */
 const dijkstra = (edges, n, origin) => {
