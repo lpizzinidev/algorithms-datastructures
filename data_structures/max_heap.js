@@ -1,5 +1,5 @@
 /**
- * Max heap implementatio
+ * Max heap implementation
  */
 class MaxHeap {
   constructor() {
