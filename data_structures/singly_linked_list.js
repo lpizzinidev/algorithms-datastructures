@@ -94,9 +94,9 @@ class SinglyLinkedList {
 }
 
 class LinkedListNode {
-  constructor(value, next) {
+  constructor(value) {
     this.value = value;
-    this.next = next;
+    this.next = null;
   }
 }
 
