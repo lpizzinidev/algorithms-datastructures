@@ -1,8 +1,8 @@
-const { LinkedList } = require('../singly_linked_list');
+const { SinglyLinkedList } = require('../singly_linked_list');
 
 describe('SinglyLinkedList', () => {
   test('basic test', () => {
-    const linkedList = new LinkedList();
+    const linkedList = new SinglyLinkedList();
 
     linkedList.addAtHead(1);
     linkedList.addAtTail(3);

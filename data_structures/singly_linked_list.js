@@ -1,7 +1,7 @@
 /**
  * Singly linked list implementation
  */
-class LinkedList {
+class SinglyLinkedList {
   constructor() {
     this.head = null;
     this.size = 0;
@@ -100,4 +100,4 @@ class LinkedListNode {
   }
 }
 
-module.exports = { LinkedList };
+module.exports = { SinglyLinkedList };
