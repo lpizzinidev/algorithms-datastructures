@@ -5,7 +5,7 @@
 class UnionFind {
   constructor(size) {
     this.size = size;
-
+    // Keep track of the root of each node in the data structure
     this.root = Array(size)
       .fill(0)
       .map((v, idx) => idx);
