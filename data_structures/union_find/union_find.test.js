@@ -1,7 +1,7 @@
-const { UnionFind } = require('../union_find');
+const { UnionFind } = require("./union_find");
 
-describe('UnionFind', () => {
-  test('constructor', () => {
+describe("UnionFind", () => {
+  test("constructor", () => {
     const unionFind = new UnionFind(10);
     unionFind.union(1, 2);
     unionFind.union(2, 5);
@@ -19,7 +19,7 @@ describe('UnionFind', () => {
     expect(unionFind.connected(4, 9)).toBe(true);
   });
 
-  test('set with multiple components', () => {
+  test("set with multiple components", () => {
     const unionFind = new UnionFind(5);
     unionFind.union(0, 1);
     unionFind.union(1, 2);
@@ -28,7 +28,7 @@ describe('UnionFind', () => {
     expect(unionFind.connectedComponents).toBe(2);
   });
 
-  test('adding the same edge should not change the result', () => {
+  test("adding the same edge should not change the result", () => {
     const unionFind = new UnionFind(5);
     unionFind.union(0, 1);
     unionFind.union(1, 2);
@@ -38,7 +38,7 @@ describe('UnionFind', () => {
     expect(unionFind.connectedComponents).toBe(2);
   });
 
-  test('set with a single components', () => {
+  test("set with a single components", () => {
     const unionFind = new UnionFind(5);
     unionFind.union(0, 1);
     unionFind.union(1, 2);

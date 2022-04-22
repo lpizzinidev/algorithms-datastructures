@@ -1,12 +1,12 @@
-const { MaxHeap } = require('../max_heap');
+const { MaxHeap } = require("./max_heap");
 
-describe('MaxHeap', () => {
-  test('constructor', () => {
+describe("MaxHeap", () => {
+  test("constructor", () => {
     const maxHeap = new MaxHeap();
 
     expect(() => {
       maxHeap.peek();
-    }).toThrow(new Error('No elements in max heap'));
+    }).toThrow(new Error("No elements in max heap"));
 
     maxHeap.add(1);
     maxHeap.add(2);
@@ -21,7 +21,7 @@ describe('MaxHeap', () => {
     expect(maxHeap.peek()).toBe(12);
   });
 
-  test('buildHeap', () => {
+  test("buildHeap", () => {
     const maxHeap = new MaxHeap();
 
     maxHeap.buildHeap([12, 33, 9, 101, -20, 55]);

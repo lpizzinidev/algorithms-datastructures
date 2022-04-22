@@ -1,12 +1,12 @@
-const { MinHeap } = require('../min_heap');
+const { MinHeap } = require("./min_heap");
 
-describe('MinHeap', () => {
-  test('constructor', () => {
+describe("MinHeap", () => {
+  test("constructor", () => {
     const minHeap = new MinHeap();
 
     expect(() => {
       minHeap.peek();
-    }).toThrow(new Error('No elements in min heap'));
+    }).toThrow(new Error("No elements in min heap"));
 
     minHeap.add(1);
     minHeap.add(2);
@@ -21,7 +21,7 @@ describe('MinHeap', () => {
     expect(minHeap.peek()).toBe(2);
   });
 
-  test('buildHeap', () => {
+  test("buildHeap", () => {
     const minHeap = new MinHeap();
 
     minHeap.buildHeap([12, 33, 9, 101, -20, 55]);

@@ -1,7 +1,7 @@
-const { DoublyLinkedList } = require('../doubly_linked_list');
+const { DoublyLinkedList } = require("./doubly_linked_list");
 
-describe('DoublyLinkedList', () => {
-  test('basic test', () => {
+describe("DoublyLinkedList", () => {
+  test("basic test", () => {
     const linkedList = new DoublyLinkedList();
 
     linkedList.addAtHead(1);
