@@ -1,3 +1,5 @@
+const NUM_CHARS = 256;
+
 /**
  * Boyer-Moore algorithm implementation.
  *
@@ -5,7 +7,6 @@
  * It returns all indexes where the pattern is found.
  */
 const boyerMoore = (txt, pat) => {
-  const numberOfChars = 256;
   const res = [];
   // If one of the string is empty, there are no matches
   if (txt === '' || pat === '') return res;
@@ -14,7 +15,7 @@ const boyerMoore = (txt, pat) => {
   // If the pattern is longer than the string, there are no matches
   if (m > n) return res;
   // Keep track of the rightmost position of each character in pattern
-  const right = new Array(numberOfChars).fill(-1);
+  const right = new Array(NUM_CHARS).fill(-1);
   for (let i = 0; i < m; i++) {
     right[pat.charCodeAt(i)] = i;
   }
