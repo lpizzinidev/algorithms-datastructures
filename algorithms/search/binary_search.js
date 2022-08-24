@@ -6,7 +6,7 @@ const binarySearch = (arr, target) => {
   let lo = 0;
   let hi = arr.length - 1;
   while (lo <= hi) {
-    const mid = (lo + hi) / 2;
+    const mid = Math.floor(lo + (hi - lo) / 2);
     if (target === arr[mid]) return mid;
     if (target < arr[mid]) hi = mid - 1;
     else lo = mid + 1;

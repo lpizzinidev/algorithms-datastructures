@@ -1,4 +1,4 @@
-const { UnionFind } = require('../../data_structures/union_find');
+const { UnionFind } = require('../../data_structures/union_find/union_find');
 
 /**
  * Kruskal's algorithm implementation using a UnionFind data structure

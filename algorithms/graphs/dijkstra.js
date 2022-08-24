@@ -1,4 +1,6 @@
-const { PriorityQueue } = require('../../data_structures/priority_queue');
+const {
+  PriorityQueue,
+} = require('../../data_structures/priority_queue/priority_queue');
 
 /**
  * Dijkstra's algorithm implementation using a Priority Queue data structure.
