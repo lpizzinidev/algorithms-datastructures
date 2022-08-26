@@ -1,4 +1,4 @@
-const { Heap } = require("./heap");
+const { Heap } = require('./heap');
 
 /**
  * Max heap implementation
@@ -53,17 +53,40 @@ class MaxHeap extends Heap {
     this.heapifyUp(this.values.length - 1);
   }
 
+  // Increase value at index with new one
+  increase(index, value) {
+    // Check if index is present
+    if (index >= this.values.length) throw new Error('Index out of range');
+    // If new value is smaller, throw an error
+    if (this.values[index] < value)
+      throw new Error('New value is smaller than existing one');
+    // If new value is equal, do nothing
+    if (this.values[index] === value) return;
+    let currentIndex = index;
+    // Update the value at index
+    this.values[currentIndex] = value;
+    // Traverse the heap until you find a value greater than new value
+    while (
+      currentIndex > 0 &&
+      this.values[this.parent(currentIndex)] < this.values[currentIndex]
+    ) {
+      // Swap the elements and move up
+      this.swap(currentIndex, this.parent(currentIndex));
+      currentIndex = this.parent(currentIndex);
+    }
+  }
+
   // Return the value of max (without removing it)
   peek() {
     // Empty heap
-    if (this.values.length === 0) throw new Error("No elements in max heap");
+    if (this.values.length === 0) throw new Error('No elements in max heap');
     return this.values[0];
   }
 
   // Return the value of max and removes it
   extractMax() {
     // Empty heap
-    if (this.values.length === 0) throw new Error("No elements in max heap");
+    if (this.values.length === 0) throw new Error('No elements in max heap');
     // Get maximum and last element
     const max = this.values[0];
     const end = this.values.pop();

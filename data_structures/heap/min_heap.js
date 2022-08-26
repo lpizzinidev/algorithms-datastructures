@@ -1,4 +1,4 @@
-const { Heap } = require("./heap");
+const { Heap } = require('./heap');
 
 /**
  * Min heap implementation
@@ -53,17 +53,40 @@ class MinHeap extends Heap {
     this.heapifyUp(this.values.length - 1);
   }
 
+  // Decrease value at index with new one
+  decrease(index, value) {
+    // Check if index is present
+    if (index >= this.values.length) throw new Error('Index out of range');
+    // If new value is greater, throw an error
+    if (this.values[index] > value)
+      throw new Error('New value is greater than existing one');
+    // If new value is equal, do nothing
+    if (this.values[index] === value) return;
+    let currentIndex = index;
+    // Update the value at index
+    this.values[currentIndex] = value;
+    // Traverse the heap until you find a value smaller than new value
+    while (
+      currentIndex > 0 &&
+      this.values[this.parent(currentIndex)] > this.values[currentIndex]
+    ) {
+      // Swap the elements and move up
+      this.swap(currentIndex, this.parent(currentIndex));
+      currentIndex = this.parent(currentIndex);
+    }
+  }
+
   // Return the value of min (without removing it)
   peek() {
     // Empty heap
-    if (this.values.length === 0) throw new Error("No elements in min heap");
+    if (this.values.length === 0) throw new Error('No elements in min heap');
     return this.values[0];
   }
 
   // Return the value of min and removes it
   extractMin() {
     // Empty heap
-    if (this.values.length === 0) throw new Error("No elements in min heap");
+    if (this.values.length === 0) throw new Error('No elements in min heap');
     // Get minimum and last element
     const min = this.values[0];
     const end = this.values.pop();
