@@ -4,6 +4,7 @@
 class Heap {
   constructor() {
     this.values = [];
+    this.size = 0;
   }
 
   // Return the index of the parent node
@@ -23,10 +24,7 @@ class Heap {
 
   // Return true if the node is a leaf (has no children)
   isLeaf(index) {
-    return (
-      index >= Math.floor(this.values.length / 2) &&
-      index <= this.values.length - 1
-    );
+    return index >= Math.floor(this.size / 2) && index <= this.size - 1;
   }
 
   // Swap two nodes
@@ -34,6 +32,12 @@ class Heap {
     const temp = this.values[index2];
     this.values[index2] = this.values[index1];
     this.values[index1] = temp;
+  }
+
+  // Remove last leaf node
+  removeLast() {
+    if (this.size === 0) return;
+    this.size--;
   }
 }
 

@@ -14,12 +14,18 @@ class MinHeap extends Heap {
     // Store the index of the smallest element (initialized at parent)
     let smallestIndex = index;
     // If left child < largestIndex
-    if (this.values[leftChildIndex] < this.values[smallestIndex]) {
+    if (
+      leftChildIndex < this.size &&
+      this.values[leftChildIndex] < this.values[smallestIndex]
+    ) {
       // Reassign smallest index
       smallestIndex = leftChildIndex;
     }
     // If right child <= smallestIndex
-    if (this.values[rightChildIndex] <= this.values[smallestIndex]) {
+    if (
+      rightChildIndex < this.size &&
+      this.values[rightChildIndex] <= this.values[smallestIndex]
+    ) {
       // Reassign largest index
       smallestIndex = rightChildIndex;
     }
@@ -50,13 +56,14 @@ class MinHeap extends Heap {
   // Add a new element to the heap
   add(element) {
     this.values.push(element);
-    this.heapifyUp(this.values.length - 1);
+    this.size++;
+    this.heapifyUp(this.size - 1);
   }
 
   // Decrease value at index with new one
   decrease(index, value) {
     // Check if index is present
-    if (index >= this.values.length) throw new Error('Index out of range');
+    if (index >= this.size) throw new Error('Index out of range');
     // If new value is greater, throw an error
     if (this.values[index] > value)
       throw new Error('New value is greater than existing one');
@@ -79,17 +86,18 @@ class MinHeap extends Heap {
   // Return the value of min (without removing it)
   peek() {
     // Empty heap
-    if (this.values.length === 0) throw new Error('No elements in min heap');
+    if (this.size === 0) throw new Error('No elements in min heap');
     return this.values[0];
   }
 
   // Return the value of min and removes it
   extractMin() {
     // Empty heap
-    if (this.values.length === 0) throw new Error('No elements in min heap');
+    if (this.size === 0) throw new Error('No elements in min heap');
     // Get minimum and last element
     const min = this.values[0];
     const end = this.values.pop();
+    this.size--;
     // Reassign the first element to the last element
     this.values[0] = end;
     // Heapify down until element is in correct position
@@ -101,7 +109,8 @@ class MinHeap extends Heap {
   // Build a max heap from an array of values
   buildHeap(values) {
     this.values = values;
-    for (let i = Math.floor(this.values.length / 2); i >= 0; i--) {
+    this.size = values.length;
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) {
       this.heapifyDown(i);
     }
   }

@@ -14,12 +14,18 @@ class MaxHeap extends Heap {
     // Store the index of the largest element (initialized at parent)
     let largestIndex = index;
     // If left child > largestIndex
-    if (this.values[leftChildIndex] > this.values[largestIndex]) {
+    if (
+      leftChildIndex < this.size &&
+      this.values[leftChildIndex] > this.values[largestIndex]
+    ) {
       // Reassign largest index
       largestIndex = leftChildIndex;
     }
     // If right child >= largestIndex
-    if (this.values[rightChildIndex] >= this.values[largestIndex]) {
+    if (
+      rightChildIndex < this.size &&
+      this.values[rightChildIndex] >= this.values[largestIndex]
+    ) {
       // Reassign largest index
       largestIndex = rightChildIndex;
     }
@@ -50,13 +56,14 @@ class MaxHeap extends Heap {
   // Add a new element to the heap
   add(element) {
     this.values.push(element);
-    this.heapifyUp(this.values.length - 1);
+    this.size++;
+    this.heapifyUp(this.size - 1);
   }
 
   // Increase value at index with new one
   increase(index, value) {
     // Check if index is present
-    if (index >= this.values.length) throw new Error('Index out of range');
+    if (index >= this.size) throw new Error('Index out of range');
     // If new value is smaller, throw an error
     if (this.values[index] < value)
       throw new Error('New value is smaller than existing one');
@@ -79,17 +86,18 @@ class MaxHeap extends Heap {
   // Return the value of max (without removing it)
   peek() {
     // Empty heap
-    if (this.values.length === 0) throw new Error('No elements in max heap');
+    if (this.size === 0) throw new Error('No elements in max heap');
     return this.values[0];
   }
 
   // Return the value of max and removes it
   extractMax() {
     // Empty heap
-    if (this.values.length === 0) throw new Error('No elements in max heap');
+    if (this.size === 0) throw new Error('No elements in max heap');
     // Get maximum and last element
     const max = this.values[0];
     const end = this.values.pop();
+    this.size--;
     // Reassign the first element to the last element
     this.values[0] = end;
     // Heapify down until element is in correct position
@@ -101,7 +109,8 @@ class MaxHeap extends Heap {
   // Build a max heap from an array of values
   buildHeap(values) {
     this.values = values;
-    for (let i = Math.floor(this.values.length / 2); i >= 0; i--) {
+    this.size = values.length;
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) {
       this.heapifyDown(i);
     }
   }
