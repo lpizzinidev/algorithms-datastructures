@@ -84,15 +84,14 @@ class LinkedList {
   deleteAtIndex(index) {
     const current = this.getNode(index);
     if (current === null) return;
-    const { prev, next } = current.prev;
-    if (prev === null) {
+    if (current.prev === null) {
       // Remove the head
-      this.head = next;
+      this.head = current.next;
     } else {
-      prev.next = next;
+      current.prev.next = current.next;
     }
-    if (next !== null) {
-      next.prev = prev;
+    if (current.next !== null) {
+      current.next.prev = current.prev;
     }
     this.size--;
   }

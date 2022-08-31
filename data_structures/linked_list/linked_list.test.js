@@ -1,6 +1,6 @@
 const { LinkedList } = require('./linked_list');
 
-describe('List', () => {
+describe('Linked List', () => {
   test('should perform linked list basic operations', () => {
     const list = new LinkedList();
 
