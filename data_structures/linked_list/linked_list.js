@@ -4,13 +4,31 @@
 class LinkedList {
   constructor() {
     this.head = null;
+    this.tail = null;
     this.size = 0;
   }
 
-  // Return the index-th node in the linked list
-  // If the index is invalid, return null
+  // Return the value of the first node in the linked list
+  getHead() {
+    if (this.head === null) throw new Error('List is empty');
+    return this.head.value;
+  }
+
+  // Return the value of the last node in the linked list
+  getTail() {
+    if (this.head === null) throw new Error('List is empty');
+    return this.tail.value;
+  }
+
+  // Get the value of the index-th node in the linked list
+  // If the index is invalid, return -1
+  get(index) {
+    return this.getNode(index).value;
+  }
+
+  // Returns the node at the given index
   getNode(index) {
-    if (this.size < index) return null;
+    if (this.size < index) throw new Error('Invalid index');
     let current = this.head;
     for (let i = 0; i < index; i++) {
       current = current.next;
@@ -18,32 +36,17 @@ class LinkedList {
     return current;
   }
 
-  // Return the last node in the linked list
-  // If the list is empty, return null
-  getTail() {
-    if (this.isEmpty()) return null;
-    let current = this.head;
-    while (current && current.next) {
-      current = current.next;
-    }
-    return current;
-  }
-
-  // Get the value of the index-th node in the linked list
-  // If the index is invalid, return -1
-  get(index) {
-    const current = this.getNode(index);
-    return current === null ? -1 : current.value;
-  }
-
   // Add a node with the specified value before the first element of the list
   addAtHead(value) {
-    const current = new LinkedListNode(value);
-    current.next = this.head;
-    if (!this.isEmpty()) {
-      this.head.prev = current;
+    const newNode = new LinkedListNode(value);
+    if (this.isEmpty()) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head.prev = newNode;
+      this.head = this.head.prev;
     }
-    this.head = current;
     this.size++;
   }
 
@@ -53,10 +56,8 @@ class LinkedList {
       this.addAtHead(value);
       return;
     }
-    const prev = this.getTail();
-    const current = new LinkedListNode(value);
-    prev.next = current;
-    current.prev = prev;
+    this.tail.next = new LinkedListNode(value, this.tail);
+    this.tail = this.tail.next;
     this.size++;
   }
 
@@ -64,36 +65,64 @@ class LinkedList {
   // If the index is equal to the length of the list, the node will be appended to the end.
   // If index is greater than the lenfth, it will not be inserted
   addAtIndex(index, value) {
-    if (index === 0) {
+    if (this.isEmpty() || index === 0) {
       this.addAtHead(value);
       return;
     }
-    const prev = this.getNode(index - 1);
-    if (prev === null) return;
-    const current = new LinkedListNode(value);
-    const next = prev.next;
-    current.prev = prev;
-    current.next = next;
-    prev.next = current;
-    if (next !== null) {
-      next.prev = current;
+    if (index === this.size) {
+      this.addAtTail(value);
+      return;
     }
+    const prev = this.getNode(index - 1);
+    const newNode = new LinkedListNode(value, prev, prev.next);
+    if (prev.next !== null) prev.next.prev = newNode;
+    prev.next = newNode;
+    this.size++;
+  }
+
+  // Delete the head of the list, if not empty
+  deleteHead() {
+    if (this.isEmpty()) throw new Error('List is empty');
+    this.head = this.head.next;
+    this.size--;
+    if (this.isEmpty()) this.tail = null;
+    else this.head.prev = null;
+  }
+
+  // Delete the tail of the list, if not empty
+  deleteTail() {
+    if (this.isEmpty()) throw new Error('List is empty');
+    this.tail = this.tail.prev;
+    this.size--;
+    if (this.isEmpty()) this.head = null;
+    else this.tail.next = null;
   }
 
   // Delete the index-th node in the list, if valid
   deleteAtIndex(index) {
     const current = this.getNode(index);
-    if (current === null) return;
-    if (current.prev === null) {
-      // Remove the head
-      this.head = current.next;
-    } else {
-      current.prev.next = current.next;
-    }
-    if (current.next !== null) {
-      current.next.prev = current.prev;
-    }
+    if (current.prev === null) this.deleteHead();
+    if (current.next === null) this.deleteTail();
+    if (current.next !== null) current.next.prev = current.prev;
+    if (current.prev !== null) current.prev.next = current.next;
+    current.prev = null;
+    current.next = null;
     this.size--;
+  }
+
+  // Clear the content of the linked list
+  clear() {
+    if (this.isEmpty()) return;
+    let current = this.head;
+    while (current !== null) {
+      const next = current.next;
+      current.prev = null;
+      current.next = null;
+      current = next;
+    }
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
   }
 
   // Check if the linked list is empty
@@ -102,11 +131,14 @@ class LinkedList {
   }
 }
 
+/**
+ * Linked list node implementation.
+ */
 class LinkedListNode {
-  constructor(value) {
+  constructor(value, prev = null, next = null) {
     this.value = value;
-    this.prev = null;
-    this.next = null;
+    this.prev = prev;
+    this.next = next;
   }
 }
 

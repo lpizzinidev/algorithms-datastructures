@@ -10,7 +10,6 @@ describe('Linked List', () => {
 
     expect(list.get(1)).toBe(2);
     expect(list.get(2)).toBe(3);
-    expect(list.get(3)).toBe(-1);
 
     list.deleteAtIndex(1);
 
