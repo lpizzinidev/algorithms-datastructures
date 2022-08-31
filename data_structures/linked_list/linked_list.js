@@ -1,7 +1,7 @@
 /**
  * Doubly linked list implementation
  */
-class DoublyLinkedList {
+class LinkedList {
   constructor() {
     this.head = null;
     this.size = 0;
@@ -111,4 +111,4 @@ class LinkedListNode {
   }
 }
 
-module.exports = { DoublyLinkedList };
+module.exports = { LinkedList };
