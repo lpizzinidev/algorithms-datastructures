@@ -148,6 +148,156 @@ class RedBlackTree {
     this.NIL.parent = null;
   }
 
+  // Deletes the node with the given value from the tree
+  delete(val) {
+    // Seach the node with `val` in the tree
+    let z = this.search(val, this.root);
+    // If the node is not found, return
+    if (z === this.NIL) return;
+    // Auxiliary copy of the node
+    let y = z;
+    // Store the original color of the node
+    let yOriginalColor = y.color;
+    // Keep track of the node that moves in y's original position
+    let x;
+    // If the node has no left child
+    if (z.left === this.NIL) {
+      // Set x to the right subtree
+      x = z.right;
+      // Replace the node with its right subtree
+      this.transplant(z, z.right);
+    }
+    // If the node has no right child
+    else if (z.right === this.NIL) {
+      // Set x to the left subtree
+      x = z.left;
+      // Replace the node with its left subtree
+      this.transplant(z, z.left);
+    }
+    // If the node has both children
+    else {
+      // Update y's original color
+      yOriginalColor = y.color;
+      // Set x to the right child
+      x = y.right;
+      // If z is the parent of y, set x parent to y
+      if (y.parent === z) x.parent = y;
+      else {
+        // Replace y with its right subtree
+        this.transplant(y, y.right);
+        // Update y's right pointers
+        y.right = z.right;
+        y.right.parent = y;
+      }
+      // Replace z with y
+      this.transplant(z, y);
+      // Update y's left pointers and color
+      y.left = z.left;
+      y.left.parent = y;
+      y.color = z.color;
+    }
+    // If y was black, fix RB tree properties
+    if (yOriginalColor === BLACK) this.deleteFixup(x);
+  }
+
+  // Returns the node with the given value if present in the
+  // subtree rooted at node, otherwise returns the sentinel node
+  search(val, node) {
+    if (node === this.NIL) return this.NIL;
+    if (node.value === val) return node;
+    if (node.value < val) return this.search(val, node.right);
+    return this.search(val, node.left);
+  }
+
+  // Replaces one subtree as a child of its parent with another subtree
+  transplant(u, v) {
+    // `u` is the root of the tree
+    if (u.parent === this.NIL) this.root = v;
+    // `u` is a left child
+    else if (u === u.parent.left) u.parent.left = v;
+    // `u` is a right child
+    else u.parent.right = v;
+    // Update the node's parent
+    v.parent = u.parent;
+  }
+
+  // Fix Red-Black trees properties after a node deletion
+  // The only properties that could be violated are either 1, 2, and 4
+  deleteFixup(x) {
+    // Move the extra black node up until
+    // - x points to a red and black node
+    // - x points to the root
+    while (x !== this.NIL && x.color === BLACK) {
+      let w;
+      if (x === x.parent.left) {
+        // x is in the left subtree
+        w = x.parent.right;
+        // Case 1: w is red
+        if (w.color === RED) {
+          // Switch the colors of w and x.parent
+          w.color = BLACK;
+          x.parent.color = RED;
+          // Left rotate on x.parent
+          this.leftRotate(x.parent);
+          w = x.parent.right;
+        }
+        // Case 2: w is black and both its children are black
+        if (w.left.color === BLACK && w.right.color === BLACK) {
+          // Remove one black node
+          w.color = RED;
+          // Iterate on the parent
+          x = x.parent;
+        } else {
+          // Case 3: w is black, it's left child is red, and right child is black
+          if (w.right.color === BLACK) {
+            // Switch the colors of w and it's left child
+            w.left.color = BLACK;
+            w.color = RED;
+            // Right rotate to transform to case 4
+            this.rightRotate(w);
+            w = x.parent.right;
+          }
+          // Case 4: w is black, it's right child is red
+          // Apply color changes and a left rotation to
+          // remove the extra black
+          w.color = x.parent.color;
+          x.parent.color = BLACK;
+          w.right.color = BLACK;
+          this.leftRotate(x.parent);
+          // Set x to the root to terminate the while loop
+          x = this.root;
+        }
+      } else {
+        // x is in the right subtree
+        // simmetric to previous case
+        w = x.parent.left;
+        if (w.color === RED) {
+          w.color = BLACK;
+          x.parent.color = RED;
+          this.rightRotate(x.parent);
+          w = x.parent.left;
+        }
+        if (w.right.color === BLACK && w.left.color === BLACK) {
+          w.color = RED;
+          x = x.parent;
+        } else {
+          if (w.left.color === BLACK) {
+            w.right.color = BLACK;
+            w.color = RED;
+            this.leftRotate(w);
+            w = x.parent.left;
+          }
+          w.color = x.parent.color;
+          x.parent.color = BLACK;
+          w.right.color = BLACK;
+          this.rightRotate(x.parent);
+          x = this.root;
+        }
+      }
+    }
+    x.color = BLACK;
+  }
+
   // Returns the size of the tree
   size() {
     return this.nodeCount;
