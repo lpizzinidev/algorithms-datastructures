@@ -198,6 +198,8 @@ class RedBlackTree {
     }
     // If y was black, fix RB tree properties
     if (yOriginalColor === BLACK) this.deleteFixup(x);
+    // Decrease the number of nodes in the tree
+    this.nodeCount--;
   }
 
   // Returns the node with the given value if present in the
@@ -321,3 +323,5 @@ class Node {
     this.right = right;
   }
 }
+
+module.exports = { RedBlackTree };
