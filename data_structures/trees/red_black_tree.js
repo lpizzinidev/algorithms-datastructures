@@ -318,19 +318,6 @@ class RedBlackTree {
     return this.select(x.right, i - r);
   }
 
-  // Returns the position of x in inorder tree walk
-  rank(x) {
-    let r = x.left.size + 1;
-    let y = x;
-    while (y !== this.root) {
-      if (y === y.parent.right) {
-        r = r + y.parent.left.size + 1;
-      }
-      y = y.parent;
-    }
-    return r;
-  }
-
   // Returns the size of the tree
   size() {
     return this.nodeCount;
