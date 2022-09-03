@@ -2,7 +2,7 @@ const RED = 0;
 const BLACK = 1;
 
 /**
- * Red-black tree implementation
+ * Red-black tree implementation.
  *
  * Properties of a RB tree:
  * 1) Every node is either red or black
@@ -10,6 +10,10 @@ const BLACK = 1;
  * 3) Every leaf is black
  * 4) If a node is red, both its children are black
  * 5) For each node, all simple paths from the node to descendant leaves contain the same number of black nodes
+ *
+ * The data structure is augmented to store the size of each node:
+ * number of nodes in the subtree rooted at node.
+ * This allows for an optimal implementation of the selection algorithm.
  */
 class RedBlackTree {
   constructor() {
@@ -43,6 +47,9 @@ class RedBlackTree {
     y.left = x;
     // Set y as parent of x
     x.parent = y;
+    // Update the size of the nodes
+    y.size = x.size;
+    x.size = x.left.size + x.right.size + 1;
   }
 
   // Applies a right rotation on node y
@@ -65,6 +72,9 @@ class RedBlackTree {
     x.right = y;
     // Set x as parent of y
     y.parent = x;
+    // Update the size of the nodes
+    x.size = y.size;
+    y.size = y.left.size + y.right.size + 1;
   }
 
   // Inserts a new node with the given value into the tree
@@ -300,6 +310,27 @@ class RedBlackTree {
     x.color = BLACK;
   }
 
+  // Returns the value of the i-th smallest node in the subtree rooter at x
+  select(x, i) {
+    const r = x.left.size + 1;
+    if (i === r) return x.value;
+    if (i < r) return this.select(x.left, i);
+    return this.select(x.right, i - r);
+  }
+
+  // Returns the position of x in inorder tree walk
+  rank(x) {
+    let r = x.left.size + 1;
+    let y = x;
+    while (y !== this.root) {
+      if (y === y.parent.right) {
+        r = r + y.parent.left.size + 1;
+      }
+      y = y.parent;
+    }
+    return r;
+  }
+
   // Returns the size of the tree
   size() {
     return this.nodeCount;
@@ -321,6 +352,7 @@ class Node {
     this.parent = parent;
     this.left = left;
     this.right = right;
+    this.size = 1;
   }
 }
 
