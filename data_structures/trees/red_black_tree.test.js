@@ -1,4 +1,4 @@
-const { RedBlackTree } = require('./red_black_tree');
+const { RED, BLACK, RedBlackTree } = require('./red_black_tree');
 
 describe('Red-black tree', () => {
   test('should insert and delete values from the tree', () => {
@@ -30,5 +30,69 @@ describe('Red-black tree', () => {
     expect(tree.isEmpty()).toBe(true);
 
     expect(tree.search(3, tree.root)).toBe(tree.NIL);
+  });
+
+  test('should apply left-left rotation', () => {
+    const tree = new RedBlackTree();
+
+    tree.insert(3);
+    tree.insert(2);
+    tree.insert(1);
+
+    expect(tree.root.value).toBe(2);
+    expect(tree.root.left.value).toBe(1);
+    expect(tree.root.right.value).toBe(3);
+
+    expect(tree.root.color).toBe(BLACK);
+    expect(tree.root.left.color).toBe(RED);
+    expect(tree.root.right.color).toBe(RED);
+  });
+
+  test('should apply left-right rotation', () => {
+    const tree = new RedBlackTree();
+
+    tree.insert(3);
+    tree.insert(1);
+    tree.insert(2);
+
+    expect(tree.root.value).toBe(2);
+    expect(tree.root.left.value).toBe(1);
+    expect(tree.root.right.value).toBe(3);
+
+    expect(tree.root.color).toBe(BLACK);
+    expect(tree.root.left.color).toBe(RED);
+    expect(tree.root.right.color).toBe(RED);
+  });
+
+  test('should apply right-left rotation', () => {
+    const tree = new RedBlackTree();
+
+    tree.insert(1);
+    tree.insert(3);
+    tree.insert(2);
+
+    expect(tree.root.value).toBe(2);
+    expect(tree.root.left.value).toBe(1);
+    expect(tree.root.right.value).toBe(3);
+
+    expect(tree.root.color).toBe(BLACK);
+    expect(tree.root.left.color).toBe(RED);
+    expect(tree.root.right.color).toBe(RED);
+  });
+
+  test('should apply right-right rotation', () => {
+    const tree = new RedBlackTree();
+
+    tree.insert(1);
+    tree.insert(2);
+    tree.insert(3);
+
+    expect(tree.root.value).toBe(2);
+    expect(tree.root.left.value).toBe(1);
+    expect(tree.root.right.value).toBe(3);
+
+    expect(tree.root.color).toBe(BLACK);
+    expect(tree.root.left.color).toBe(RED);
+    expect(tree.root.right.color).toBe(RED);
   });
 });

@@ -324,4 +324,4 @@ class Node {
   }
 }
 
-module.exports = { RedBlackTree };
+module.exports = { RED, BLACK, RedBlackTree };
