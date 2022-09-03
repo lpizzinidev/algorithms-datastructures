@@ -95,4 +95,17 @@ describe('Red-black tree', () => {
     expect(tree.root.left.color).toBe(RED);
     expect(tree.root.right.color).toBe(RED);
   });
+
+  test('should select the correct index for a node in the tree', () => {
+    const tree = new RedBlackTree();
+
+    tree.insert(1);
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(4);
+    tree.insert(5);
+
+    expect(tree.select(tree.root, 2)).toBe(2);
+    expect(tree.select(tree.root, 5)).toBe(5);
+  });
 });

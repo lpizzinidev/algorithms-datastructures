@@ -352,7 +352,7 @@ class Node {
     this.parent = parent;
     this.left = left;
     this.right = right;
-    this.size = 1;
+    this.size = 0;
   }
 }
 
