@@ -15,14 +15,22 @@ const matrixChain = (matrices) => {
   const dp = new Array(n).fill(0).map(() => new Array(n).fill(0));
   // For each chain length
   for (let l = 2; l < n; l++) {
+    // For each matrix parenthesization
     for (let i = 1; i < n - l + 1; i++) {
       const j = i + l - 1;
       if (j == n) continue;
+      // Set the cost of multiplying matrices[i]...matrices[j] to infinity
       dp[i][j] = Number.MAX_VALUE;
       for (let k = i; k < j; k++) {
+        // Update the cost to multiply matrices[i]...matrices[j] if possible
         dp[i][j] = Math.min(
           dp[i][j],
-          dp[i][k] + dp[k + 1][j] + matrices[i - 1] * matrices[k] * matrices[j]
+          // Cost of multiplying matrices[i]...matrices[k]
+          dp[i][k] +
+            // Cost of multiplying matrices[k+1]...matrices[j]
+            dp[k + 1][j] +
+            // Cost of multiplying two `i-1 x k` and `k x j` matrices
+            matrices[i - 1] * matrices[k] * matrices[j]
         );
       }
     }
