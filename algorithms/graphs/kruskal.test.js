@@ -1,4 +1,4 @@
-const { kruskal } = require('../kruskal');
+const { kruskal } = require('./kruskal');
 
 describe("Kruskal's algorithm", () => {
   test('Basic test', () => {

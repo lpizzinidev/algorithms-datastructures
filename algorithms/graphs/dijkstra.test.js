@@ -1,4 +1,4 @@
-const { dijkstra } = require('../dijkstra');
+const { dijkstra } = require('./dijkstra');
 
 describe("Dijkstra's algorithm", () => {
   test('Basic test', () => {

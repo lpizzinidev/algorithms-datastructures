@@ -1,4 +1,4 @@
-const { prim } = require('../prim');
+const { prim } = require('./prim');
 
 describe("Prim's algorithm", () => {
   test('Basic test', () => {
