@@ -1,49 +1,43 @@
+const { Heap } = require('../heap/heap');
+
 /**
- * Priority queue implementation
+ * Priority queue implementation using a min heap
  */
 class PriorityQueue {
   constructor() {
-    this.items = [];
+    this.queue = new Heap((a, b) => {
+      if (a.priority > b.priority) return -1;
+      if (a.priority < b.priority) return 1;
+      return 0;
+    });
   }
 
   // Add an element to the queue as per priority
   enqueue(element, priority) {
     const item = new QueueItem(element, priority);
-
-    // Iterate the queue and add the element at the correct location
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].priority > item.priority) {
-        // Correct location found, enqueue the new item
-        this.items.splice(i, 0, item);
-        return;
-      }
-    }
-
-    // If item have the highest priority add it at the end of the queue
-    this.items.push(item);
+    this.queue.add(item);
   }
 
   // Returns the first element of the queue and removes it
   dequeue() {
     if (this.isEmpty()) throw new Error('No elements in queue');
-    return this.items.shift();
+    return this.queue.pop().element;
   }
 
   // Returns the first element of the queue, without removing it
   front() {
     if (this.isEmpty()) throw new Error('No elements in queue');
-    return this.items[0];
-  }
-
-  // Returns the last element of the queue
-  rear() {
-    if (this.isEmpty()) throw new Error('No elements in queue');
-    return this.items[this.items.length - 1];
+    return this.queue.peek().element;
   }
 
   // Check if the queue is empty
   isEmpty() {
-    return this.items.length === 0;
+    return this.queue.isEmpty();
+  }
+
+  // Returns the size of the priority queue
+  size() {
+    return this.queue.size();
   }
 }
 

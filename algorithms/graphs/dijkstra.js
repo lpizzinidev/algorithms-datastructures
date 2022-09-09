@@ -26,7 +26,7 @@ const dijkstra = (edges, n, origin) => {
   // While the queue is not empty and i don't have included all edges
   while (!priorityQueue.isEmpty() && included.size < n) {
     // Dequeue the next edge, mark it as visited
-    const [or, dest, weight] = priorityQueue.dequeue().element;
+    const [or, dest, weight] = priorityQueue.dequeue();
     included.add(or);
     // For each adjacent unvisited node, update its distance if necessary
     for (const [or1, dest1, weight1] of edges) {

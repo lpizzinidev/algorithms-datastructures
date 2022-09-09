@@ -22,8 +22,8 @@ const huffmanCode = (chars, freqs) => {
   }
   for (let i = 1; i < n; i++) {
     // Extract the nodes with the lowest frequencies
-    const left = pq.dequeue().element;
-    const right = pq.dequeue().element;
+    const left = pq.dequeue();
+    const right = pq.dequeue();
     // Create a new node with frequency given by the sum
     // of the frequencies of the two nodes
     const newNode = new HuffmanNode('$', left.freq + right.freq, left, right);
@@ -31,7 +31,7 @@ const huffmanCode = (chars, freqs) => {
     pq.enqueue(newNode, newNode.freq);
   }
   // Store the value of the optimal prefix code tree
-  const root = pq.front().element;
+  const root = pq.front();
   // Store an object to keep track of each character's encoding
   const code = {};
   // Recursive function that calculate the encoding of each character

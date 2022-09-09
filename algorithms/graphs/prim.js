@@ -27,7 +27,7 @@ const prim = (edges, n) => {
   // While there are still vertices to be visited
   while (!priorityQueue.isEmpty() && included.size < n) {
     // Dequeue the next element
-    const { destination, weight } = priorityQueue.dequeue().element;
+    const { destination, weight } = priorityQueue.dequeue();
     if (!included.has(destination)) {
       result += weight;
       included.add(destination);
