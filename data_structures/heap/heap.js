@@ -48,40 +48,31 @@ class Heap {
     // Get indexes of children
     const leftChildIndex = this.leftChild(index);
     const rightChildIndex = this.rightChild(index);
-    // Store the index of the smallest element (initialized at parent)
-    let smallestIndex = index;
-    // If left child < largestIndex
+    // Store the index of the element to swap (initialized at parent)
+    let swapIndex = index;
     if (
       leftChildIndex < this.count &&
-      this.comparator(this.values[leftChildIndex], this.values[smallestIndex]) >
-        0
+      this.comparator(this.values[leftChildIndex], this.values[swapIndex]) > 0
     ) {
-      // Reassign smallest index
-      smallestIndex = leftChildIndex;
+      swapIndex = leftChildIndex;
     }
-    // If right child <= smallestIndex
     if (
       rightChildIndex < this.count &&
-      this.comparator(
-        this.values[rightChildIndex],
-        this.values[smallestIndex]
-      ) >= 0
+      this.comparator(this.values[rightChildIndex], this.values[swapIndex]) >= 0
     ) {
-      // Reassign largest index
-      smallestIndex = rightChildIndex;
+      swapIndex = rightChildIndex;
     }
     // If the smallest element is the parent no operations are needed
-    if (smallestIndex === index) return;
+    if (swapIndex === index) return;
     // Swap the parent with the smallest node and heapify the children
-    this.swap(index, smallestIndex);
-    this.heapifyDown(smallestIndex);
+    this.swap(index, swapIndex);
+    this.heapifyDown(swapIndex);
   }
 
   // Heapify operation on all nodes above index
   heapifyUp(index) {
     let currentIndex = index;
     let parentIndex = this.parent(currentIndex);
-
     // While we haven't reached the root and the current element is smaller than its parent
     while (
       currentIndex > 0 &&
@@ -98,7 +89,7 @@ class Heap {
   add(element) {
     this.values.push(element);
     this.count++;
-    this.heapifyUp(this.size - 1);
+    this.heapifyUp(this.count - 1);
   }
 
   // Return the value of max (without removing it)
@@ -110,18 +101,18 @@ class Heap {
 
   // Return the value of max and removes it
   pop() {
-    // Empty heap
-    if (this.isEmpty()) throw new Error('No elements in heap');
-    // Get maximum and last element
-    const max = this.values[0];
+    // Get first and last element
+    const top = this.peek();
     const end = this.values.pop();
     this.count--;
-    // Reassign the first element to the last element
-    this.values[0] = end;
-    // Heapify down until element is in correct position
-    this.heapifyDown(0);
-    // Return the maximum value
-    return max;
+    if (this.count > 0) {
+      // Reassign the first element to the last element
+      this.values[0] = end;
+      // Heapify down until element is in correct position
+      this.heapifyDown(0);
+    }
+    // Return the top value
+    return top;
   }
 
   // Build a max heap from an array of values

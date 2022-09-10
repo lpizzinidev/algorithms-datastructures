@@ -6,16 +6,15 @@ const { Heap } = require('../heap/heap');
 class PriorityQueue {
   constructor() {
     this.queue = new Heap((a, b) => {
-      if (a.priority > b.priority) return -1;
       if (a.priority < b.priority) return 1;
+      if (a.priority > b.priority) return -1;
       return 0;
     });
   }
 
   // Add an element to the queue as per priority
   enqueue(element, priority) {
-    const item = new QueueItem(element, priority);
-    this.queue.add(item);
+    this.queue.add(new QueueItem(element, priority));
   }
 
   // Returns the first element of the queue and removes it

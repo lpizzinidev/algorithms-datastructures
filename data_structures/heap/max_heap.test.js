@@ -19,6 +19,12 @@ describe('MaxHeap', () => {
     maxHeap.add(12);
 
     expect(maxHeap.peek()).toBe(12);
+
+    maxHeap.add(120);
+    maxHeap.add(23);
+
+    expect(maxHeap.pop()).toBe(120);
+    expect(maxHeap.peek()).toBe(23);
   });
 
   test('buildHeap', () => {

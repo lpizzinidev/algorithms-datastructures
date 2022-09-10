@@ -19,6 +19,12 @@ describe('MinHeap', () => {
     minHeap.add(12);
 
     expect(minHeap.peek()).toBe(2);
+
+    minHeap.add(-12);
+    minHeap.add(0);
+
+    expect(minHeap.pop()).toBe(-12);
+    expect(minHeap.peek()).toBe(0);
   });
 
   test('buildHeap', () => {
