@@ -5,9 +5,10 @@ class FibonacciHeap {
   constructor() {
     this.min = null;
     this.count = 0;
+    this.found = null; // Helper node for find function
   }
 
-  // Inserts a new node with value in the tree
+  // Inserts a new node with value in the heap
   insert(value) {
     // Create the new node
     const newNode = new FibonacciNode(value);
@@ -29,11 +30,11 @@ class FibonacciHeap {
         this.minimum = newNode;
       }
     }
-    // Increase the number of nodes in the tree
+    // Increase the number of nodes in the heap
     this.count++;
   }
 
-  // Returns the minimum value in the tree, if present
+  // Returns the minimum value in the heap, if present
   minimum() {
     if (this.isEmpty()) throw new Error('Heap is empty');
     return this.min.value;
@@ -43,7 +44,7 @@ class FibonacciHeap {
   extractMin() {
     // Store the value of the minimum node
     const z = this.min;
-    // Check if tree is empty
+    // Check if heap is empty
     if (z === null) throw new Error('Heap is empty');
     // Makes each child of z root of the heap
     const child = z.child;
@@ -146,12 +147,92 @@ class FibonacciHeap {
     y.mark = false;
   }
 
-  // Checks if the tree is empty
+  // Returns the node with the given key
+  find(k) {
+    // Initializes helper node to null
+    this.found = null;
+    // Recursively search for the node with the given key
+    this._find(k, this.min);
+    // Returns the found node
+    return this.found;
+  }
+
+  // Recusively search the node with given key
+  // in the node and its children
+  _find(k, node) {
+    // If node is found or not present return
+    if (this.found !== null || node === null) return;
+    // Iterate in the heap until the node is found
+    let temp = node;
+    do {
+      if (k === temp.value) this.found = temp;
+      else {
+        this._find(k, temp.child);
+        temp = temp.right;
+      }
+    } while (temp !== node && this.found === null);
+  }
+
+  // Decreases the value of the node with given key
+  decreaseKey(k, value) {
+    // Search the node with the given key
+    const x = this.find(k);
+    // If the node is not present or the new key is greater, throw an exception
+    if (x === null || value > x.value) throw new Error('Invalid key');
+    // Update the value of the node
+    x.value = value;
+    const y = x.parent;
+    // Reintegrate the order in the heap if necessary
+    if (y !== null && x.value < y.value) {
+      this.cut(x, y);
+      this.cascadingCut(y);
+    }
+    // If the value is the new minimum, update the minimum pointer
+    if (x.value < this.min.value) this.min = x;
+  }
+
+  // Cuts the link between x and its parent y making x a root
+  cut(x, y) {
+    // Remove x from the subtree
+    x.right.left = x.left;
+    x.left.right = x.right;
+    // Decrease the parent degree
+    y.degree--;
+    // Insert x as new root
+    x.right = null;
+    x.left = null;
+    this.insert(x);
+    x.parent = null;
+    x.mark = false;
+  }
+
+  cascadingCut(y) {
+    const z = y.parent;
+    if (z === null) return;
+    // If y is unmarked, mark it since its first children has
+    // just been cut
+    if (!y.mark) y.mark = true;
+    else {
+      // If y is marked, it has just lost its second child
+      // The function recurses up the heap until a root
+      // or un unmarked node is found
+      this.cut(y, z);
+      this.cascadingCut(z);
+    }
+  }
+
+  // Deletes a node from the heap
+  delete(x) {
+    this.decreaseKey(x, Number.MIN_VALUE);
+    this.extractMin();
+  }
+
+  // Checks if the heap is empty
   isEmpty() {
     return this.size() === 0;
   }
 
-  // Returns the number of nodes in the tree
+  // Returns the number of nodes in the heap
   size() {
     return this.count;
   }
