@@ -15,7 +15,7 @@ class FibonacciHeap {
     // If the heap is empty
     if (this.min === null) {
       // Add the new node as minimum
-      this.minimum = newNode;
+      this.min = newNode;
       newNode.left = this.min;
       newNode.right = this.min;
     } else {
@@ -26,9 +26,7 @@ class FibonacciHeap {
       this.min.left = newNode;
       // If the new node is the new minimum, updates the
       // value of the minimum
-      if (newNode.value < this.min.value) {
-        this.minimum = newNode;
-      }
+      if (newNode.value < this.min.value) this.min = newNode;
     }
     // Increase the number of nodes in the heap
     this.count++;
@@ -47,15 +45,16 @@ class FibonacciHeap {
     // Check if heap is empty
     if (z === null) throw new Error('Heap is empty');
     // Makes each child of z root of the heap
-    const child = z.child;
+    let child = z.child;
     let k = child;
     let p;
-    while (child !== null) {
-      p = child.right;
-      this.insert(child.value);
-      child.parent = null;
-      child = p;
-      if (child == k) break;
+    if (child !== null) {
+      do {
+        p = child.right;
+        this.insert(child.value);
+        child.parent = null;
+        child = p;
+      } while (child !== null && child !== k);
     }
     // Remove the node from the root list
     z.left.right = z.right;
@@ -86,13 +85,14 @@ class FibonacciHeap {
     const arr = new Array(D + 1).fill(null);
     // For each node in the root list
     let w = this.min;
-    while (w !== null) {
-      let check = this.min;
+    if (w === null) return;
+    let check = this.min;
+    do {
       let x = w;
-      const d = x.degree;
+      let d = x.degree;
       // While there is another node with the same degree
       while (arr[d] !== null) {
-        const y = arr[d];
+        let y = arr[d];
         // If the node value is greater than the other node
         // with the same degree
         if (x.value > y.value) {
@@ -113,13 +113,14 @@ class FibonacciHeap {
       // Keep iterating
       w = w.right;
       // If reached minimum node, terminate the loop
-      if (w === check) break;
-    }
+    } while (w !== null && w !== check);
     // Remove the minimum node
     this.min = null;
     for (let i = 0; i <= D; i++) {
       // Insert the new root nodes with the new degree
-      if (arr[i] != null) this.insert(arr[i]);
+      if (arr[i] === null) continue;
+      if (this.min === null) this.min = arr[i];
+      this.insert(arr[i].value);
     }
   }
 
