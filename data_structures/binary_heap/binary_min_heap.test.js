@@ -1,8 +1,8 @@
-const { MinHeap } = require('./min_heap');
+const { BinaryMinHeap } = require('./binary_min_heap');
 
-describe('MinHeap', () => {
+describe('BinaryMinHeap', () => {
   test('constructor', () => {
-    const minHeap = new MinHeap();
+    const minHeap = new BinaryMinHeap();
 
     expect(() => {
       minHeap.peek();
@@ -28,7 +28,7 @@ describe('MinHeap', () => {
   });
 
   test('buildHeap', () => {
-    const minHeap = new MinHeap();
+    const minHeap = new BinaryMinHeap();
 
     minHeap.buildHeap([12, 33, 9, 101, -20, 55]);
 

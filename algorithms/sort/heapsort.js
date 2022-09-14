@@ -1,4 +1,6 @@
-const { MaxHeap } = require('../../data_structures/heap/max_heap');
+const {
+  BinaryMaxHeap,
+} = require('../../data_structures/binary_heap/binary_max_heap');
 
 /**
  * Heapsort implementation.
@@ -9,7 +11,7 @@ const { MaxHeap } = require('../../data_structures/heap/max_heap');
  * Time O(n*log(n)) Space O(1)
  */
 const heapsort = (arr) => {
-  const heap = new MaxHeap();
+  const heap = new BinaryMaxHeap();
   heap.buildHeap(arr);
   for (let i = arr.length - 1; i > 0; i--) {
     heap.swap(0, i);

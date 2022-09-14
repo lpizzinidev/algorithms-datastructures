@@ -1,9 +1,9 @@
-const { Heap } = require('./heap');
+const { BinaryHeap } = require('./binary_heap');
 
 /**
  * Min heap implementation
  */
-class MinHeap extends Heap {
+class BinaryMinHeap extends BinaryHeap {
   constructor() {
     super((a, b) => {
       if (a < b) return 1;
@@ -13,4 +13,4 @@ class MinHeap extends Heap {
   }
 }
 
-module.exports = { MinHeap };
+module.exports = { BinaryMinHeap };

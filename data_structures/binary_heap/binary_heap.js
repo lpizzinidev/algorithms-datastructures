@@ -1,7 +1,7 @@
 /**
  * Heap signature class implementation
  */
-class Heap {
+class BinaryHeap {
   constructor(comparator) {
     this.values = [];
     this.comparator = comparator;
@@ -135,4 +135,4 @@ class Heap {
   }
 }
 
-module.exports = { Heap };
+module.exports = { BinaryHeap };

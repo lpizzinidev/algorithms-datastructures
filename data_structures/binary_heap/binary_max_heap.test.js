@@ -1,8 +1,8 @@
-const { MaxHeap } = require('./max_heap');
+const { BinaryMaxHeap } = require('./binary_max_heap');
 
-describe('MaxHeap', () => {
+describe('BinaryMaxHeap', () => {
   test('constructor', () => {
-    const maxHeap = new MaxHeap();
+    const maxHeap = new BinaryMaxHeap();
 
     expect(() => {
       maxHeap.peek();
@@ -28,7 +28,7 @@ describe('MaxHeap', () => {
   });
 
   test('buildHeap', () => {
-    const maxHeap = new MaxHeap();
+    const maxHeap = new BinaryMaxHeap();
 
     maxHeap.buildHeap([12, 33, 9, 101, -20, 55]);
 

@@ -1,11 +1,11 @@
-const { Heap } = require('../heap/heap');
+const { BinaryHeap } = require('../binary_heap/binary_heap');
 
 /**
- * Priority queue implementation using a min heap
+ * Priority queue implementation using a binary min heap
  */
 class PriorityQueue {
   constructor() {
-    this.queue = new Heap((a, b) => {
+    this.queue = new BinaryHeap((a, b) => {
       if (a.priority < b.priority) return 1;
       if (a.priority > b.priority) return -1;
       return 0;

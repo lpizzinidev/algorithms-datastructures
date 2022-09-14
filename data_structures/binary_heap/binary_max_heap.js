@@ -1,9 +1,9 @@
-const { Heap } = require('./heap');
+const { BinaryHeap } = require('./binary_heap');
 
 /**
  * Max heap implementation
  */
-class MaxHeap extends Heap {
+class BinaryMaxHeap extends BinaryHeap {
   constructor() {
     super((a, b) => {
       if (a > b) return 1;
@@ -13,4 +13,4 @@ class MaxHeap extends Heap {
   }
 }
 
-module.exports = { MaxHeap };
+module.exports = { BinaryMaxHeap };
