@@ -26,7 +26,7 @@ class FibonacciHeap {
       this.min.left = newNode;
       // If the new node is the new minimum, updates the
       // value of the minimum
-      if (newNode.value < this.min.value) this.min = newNode;
+      if (newNode.key < this.min.key) this.min = newNode;
     }
     // Increase the number of nodes in the heap
     this.count++;
@@ -35,7 +35,7 @@ class FibonacciHeap {
   // Returns the minimum value in the heap, if present
   minimum() {
     if (this.isEmpty()) throw new Error('Heap is empty');
-    return this.min.value;
+    return this.min.key;
   }
 
   // Removes the minimum node and returns its value
@@ -56,7 +56,7 @@ class FibonacciHeap {
         child.right = this.min;
         child.left = this.min.left;
         this.min.left = child;
-        if (child.value < this.min.value) {
+        if (child.key < this.min.key) {
           this.min = child;
         }
         child.parent = null;
@@ -78,7 +78,7 @@ class FibonacciHeap {
     // Decrease the number of nodes in the heap
     this.count--;
     // Return the minimum value
-    return z.value;
+    return z.key;
   }
 
   // Consolidate the root list to make sure that every root
@@ -102,7 +102,7 @@ class FibonacciHeap {
         let y = arr[d];
         // If the node value is greater than the other node
         // with the same degree
-        if (x.value > y.value) {
+        if (x.key > y.key) {
           // Swap the nodes
           const temp = x;
           x = y;
@@ -127,7 +127,7 @@ class FibonacciHeap {
       // Insert the new root nodes with the new degree
       if (arr[i] === null) continue;
       if (this.min === null) this.min = arr[i];
-      else this.insert(arr[i].value);
+      else this.insert(arr[i].key);
     }
   }
 
@@ -173,7 +173,7 @@ class FibonacciHeap {
     // Iterate in the heap until the node is found
     let temp = node;
     do {
-      if (k === temp.value) this.found = temp;
+      if (k === temp.key) this.found = temp;
       else {
         this._find(k, temp.child);
         temp = temp.right;
@@ -186,17 +186,17 @@ class FibonacciHeap {
     // Search the node with the given key
     const x = this.find(k);
     // If the node is not present or the new key is greater, throw an exception
-    if (x === null || value > x.value) throw new Error('Invalid key');
+    if (x === null || value > x.key) throw new Error('Invalid key');
     // Update the value of the node
-    x.value = value;
+    x.key = value;
     const y = x.parent;
     // Reintegrate the order in the heap if necessary
-    if (y !== null && x.value < y.value) {
+    if (y !== null && x.key < y.key) {
       this.cut(x, y);
       this.cascadingCut(y);
     }
     // If the value is the new minimum, update the minimum pointer
-    if (x.value < this.min.value) this.min = x;
+    if (x.key < this.min.key) this.min = x;
   }
 
   // Cuts the link between x and its parent y making x a root
@@ -251,7 +251,7 @@ class FibonacciHeap {
  */
 class FibonacciNode {
   constructor(value) {
-    this.value = value;
+    this.key = value;
     this.parent = null;
     this.left = null;
     this.right = null;
