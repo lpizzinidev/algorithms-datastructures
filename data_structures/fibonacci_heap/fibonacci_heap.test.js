@@ -18,9 +18,14 @@ describe('Fibonacci Heap', () => {
 
     expect(heap.size()).toBe(3);
     expect(heap.extractMin()).toBe(1);
+    expect(heap.size()).toBe(2);
     expect(heap.extractMin()).toBe(2);
+    expect(heap.size()).toBe(1);
 
     expect(heap.minimum()).toBe(12);
-    expect(heap.size()).toBe(1);
+
+    heap.decreaseKey(12, 1);
+
+    expect(heap.minimum()).toBe(1);
   });
 });

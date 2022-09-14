@@ -50,8 +50,15 @@ class FibonacciHeap {
     let p;
     if (child !== null) {
       do {
+        // Add child to the root list of the heap
         p = child.right;
-        this.insert(child.value);
+        this.min.left.right = child;
+        child.right = this.min;
+        child.left = this.min.left;
+        this.min.left = child;
+        if (child.value < this.min.value) {
+          this.min = child;
+        }
         child.parent = null;
         child = p;
       } while (child !== null && child !== k);
@@ -120,7 +127,7 @@ class FibonacciHeap {
       // Insert the new root nodes with the new degree
       if (arr[i] === null) continue;
       if (this.min === null) this.min = arr[i];
-      this.insert(arr[i].value);
+      else this.insert(arr[i].value);
     }
   }
 
