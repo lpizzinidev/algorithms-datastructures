@@ -107,3 +107,5 @@ class BTreeNode {
     this.n = 0;
   }
 }
+
+module.exports = { BTree };
