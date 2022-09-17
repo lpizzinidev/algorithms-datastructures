@@ -56,7 +56,7 @@ class VanEmdeBoasTree {
 
   // Builds an element number from x and y
   index(x, y) {
-    return x * Math.ceil(math.sqrt(this.u)) + y;
+    return x * Math.ceil(Math.sqrt(this.u)) + y;
   }
 
   // Find the predecessor of x in the tree
@@ -81,7 +81,7 @@ class VanEmdeBoasTree {
     const predCluster = this.summary.predecessor(this.high(x));
     if (predCluster === null) {
       // If the precedent clusters are empty and x is grater than min, return min
-      if (this.min !== null && x > this.min) return this.minimum;
+      if (this.min !== null && x > this.min) return this.minimum();
       // Otherwise there is no predecessor
       return null;
     }
