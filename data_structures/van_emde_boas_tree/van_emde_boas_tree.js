@@ -82,4 +82,63 @@ class VanEmdeBoasTree {
     const offset = this.cluster[succCluster].minimum();
     return this.index(succCluster, offset);
   }
+
+  insert(x) {
+    if (this.min === null) {
+      this.min = x;
+      this.max = x;
+      return;
+    }
+    if (x < this.min) {
+      const temp = this.min;
+      this.min = x;
+      x = temp;
+    }
+    if (this.u > 2) {
+      if (this.cluster[this.high(x)].minimum() === null) {
+        this.summary.insert(this.high(x));
+      } else {
+        this.cluster[this.high(x)].insert(this.low(x));
+        this.cluster[this.high(x)].min = this.low(x);
+        this.cluster[this.high(x)].max = this.low(x);
+      }
+    }
+    if (x > this.max) {
+      this.max = x;
+    }
+  }
+
+  delete(x) {
+    if (this.min === this.max) {
+      this.min = null;
+      this.max = null;
+      return;
+    }
+    if (this.u === 2) {
+      this.min = x === 0 ? 1 : 0;
+      this.max = this.min;
+      return;
+    }
+    if (x === this.min) {
+      const firstCluster = this.summary.minimum();
+      x = this.index(firstCluster, this.cluster[firstCluster].minimum());
+      this.min = x;
+    }
+    this.cluster[this.high(x)].delete(this.low(x));
+    if (this.cluster[this.high(x)].min === null) {
+      this.summary.delete(this.high(x));
+      if (x === this.max) {
+        const summaryMax = this.summary.maximum();
+        if (summaryMax === null) {
+          this.max = this.min;
+        } else {
+          this.max = this.index(summaryMax, this.cluster[summaryMax].maximum());
+        }
+      }
+    } else if (x === this.max) {
+      this.max = this.index(this.high(x), this.cluster[this.high(x)].maximum());
+    }
+  }
 }
+
+module.exports = { VanEmdeBoasTree };
