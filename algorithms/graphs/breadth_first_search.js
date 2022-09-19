@@ -1,15 +1,15 @@
 /**
  * BFS algorithm implementation.
  *
- * Returns the BFS traversal of the graph starting at origin.
+ * Returns an array of edge distances from the origin (+inf if not reachable)
  */
 const bfs = (edges, n, origin) => {
   // Initialize an array to keep track of visited nodes
-  const visited = new Array(n).fill(false);
-  // Initialize an empty array to store the bfs traversal of the graph
-  const bfsTraversal = [];
-  // Initialize a queue with the origin
-  const q = [origin];
+  const visited = new Array(n + 1).fill(false);
+  // Initialize an empty array edge distances
+  const distances = new Array(n + 1).fill(Number.MAX_VALUE);
+  // Initialize a queue with the origin and the current step
+  const q = [[origin, 0]];
   // Initialize an adjacency list to store adjacent nodes
   const adj = {};
   for (const [n1, n2] of edges) {
@@ -21,20 +21,20 @@ const bfs = (edges, n, origin) => {
   // While the queue is not empty
   while (q.length > 0) {
     // Remove the first node from the queue
-    const node = q.shift();
+    const [node, step] = q.shift();
     // If visited, ignore it
     if (visited[node]) continue;
     // Mark it as visited
     visited[node] = true;
     // Add the node to the BFS traversal
-    bfsTraversal.push(node);
+    distances[node] = step;
     // Add each unvisited neighbor to the queue
     for (const neighbor of adj[node]) {
       if (visited[neighbor]) continue;
-      q.push(neighbor);
+      q.push([neighbor, step + 1]);
     }
   }
-  return bfsTraversal;
+  return distances;
 };
 
 module.exports = { bfs };
